@@ -7,14 +7,25 @@ def emotion_detector(text):
     json_response = response.json()
     my_item = json_response["emotionPredictions"][0]["emotion"]
     max_val = max(my_item, key=my_item.get)
-    final_repsonse = {"anger":my_item["anger"],
-                      "disgust":my_item["disgust"],
-                      "fear":my_item["fear"],
-                      "joy":my_item["joy"],
-                      "sadness":my_item["sadness"],
-                      "dominant_emotion":max_val
-                    }
-    return final_repsonse
-
-    # return json_response
+    if response.status_code == 400:
+        
+        final_response = {"anger":None,
+                        "disgust":None,
+                        "fear":None,
+                        "joy":None,
+                        "sadness":None,
+                        "dominant_emotion":None
+                        }
+        return final_response
+    else:
+        final_response = {"anger":my_item["anger"],
+                        "disgust":my_item["disgust"],
+                        "fear":my_item["fear"],
+                        "joy":my_item["joy"],
+                        "sadness":my_item["sadness"],
+                        "dominant_emotion":max_val
+                        }
     
+        return final_response
+
+
